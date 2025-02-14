@@ -8,10 +8,10 @@ const verifyToken = async (req, res, next) => {
         
         if (!token) {
             return res.status(403).json({ message: 'No autorizado' });
-        }
+        }// si no hay token bloquea el acceso
 
-        const decoded = jwt.verify(token, 'tu_jwt_secret');
-        const usuario = await Usuario.findByPk(decoded.id);
+        const decoded = jwt.verify(token, 'tu_jwt_secret');// verifica el token
+        const usuario = await Usuario.findByPk(decoded.id);//busca a su usuario por su id
 
         if (!usuario) {
             res.clearCookie('token', {
@@ -23,7 +23,7 @@ const verifyToken = async (req, res, next) => {
         }
 
         req.usuario = usuario;
-        next();
+        next();// permite la solicitud siga su curso
     } catch (error) {
         res.clearCookie('token', {
             httpOnly: true,

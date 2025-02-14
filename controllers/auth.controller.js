@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs"); 
 const jwt = require("jsonwebtoken");
 const { Usuario } = require("../models");
 const { Op } = require("sequelize");
@@ -16,7 +16,7 @@ const cookieOptions = {
 const register = async (req, res) => {
   try {
     const { nombres, documentoIdentidad, nombreDeUsuario, password, rol } =
-      req.body;
+      req.body;// estos son los datos del usuario que seran enviados al cuerpo de la solicitud
 
     const usuarioExistente = await Usuario.findOne({
       where: {
@@ -30,27 +30,26 @@ const register = async (req, res) => {
       });
     }
 
-    //encripta la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);//encripta la contraseña
 
-    //crea un nuevo usuario
     const usuario = await Usuario.create({
       nombres,
       documentoIdentidad,
       nombreDeUsuario,
       password: hashedPassword,
       rol,
-    });
+    }); // guarda al usuario con la contraseña encriptada en la base de datos
+   
 
-    //asigna el token al usuario creado
+    
     const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, JWT_SECRET, {
       expiresIn: "24h",
-    });
+    }); //asigna el token al usuario creado
 
-    //guarda el tocken del usuario en una cookie
-    res.cookie("token", token, cookieOptions);
+   
+    res.cookie("token", token, cookieOptions); //guarda el tocken del usuario en una cookie
 
-    //devuelve el usuarioy  los datos del usuario registrado
+    //devuelve los datos del usuario registrado sin la contraseña
     res.status(201).json({
       message: "Usuario registrado exitosamente",
       user: {
@@ -134,7 +133,7 @@ const check = async (req, res) => {
       nombres: req.usuario.nombres,
       nombreDeUsuario: req.usuario.nombreDeUsuario,
       rol: req.usuario.rol,
-      // Añade aquí cualquier otro campo que necesites en el frontend
+      // retorna los datos del usuario autenticado en el frontend
     };
 
     res.json({ user: userData });

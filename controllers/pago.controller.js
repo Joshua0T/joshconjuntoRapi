@@ -4,7 +4,7 @@ const { Pago, Propietario } = require('../models');
 const obtenerPagos = async (req, res) => {
     try {
         const pagos = await Pago.findAll({
-            include: [{ model: Propietario }]
+            include: [{ model: Propietario }]// pagos asociados a su propietario
         });
         res.json(pagos);
     } catch (error) {

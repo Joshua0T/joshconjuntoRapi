@@ -4,13 +4,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Usuarios', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,  
+        autoIncrement: true, 
+        primaryKey: true, 
+        type: Sequelize.INTEGER  
       },
       nombres: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING, 
         allowNull: false
       },
       documentoIdentidad: {
@@ -39,5 +39,5 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Usuarios');
-  }
+  } //elimina la tabla de usuarios si ya existe una con el nombre
 };

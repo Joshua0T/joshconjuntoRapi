@@ -3,8 +3,8 @@ const { Apartamento, Propietario } = require('../models');
 // Obtener todos los apartamentos
 const obtenerApartamentos = async (req, res) => {
     try {
-        const apartamentos = await Apartamento.findAll({
-            include: [{ model: Propietario }]
+        const apartamentos = await Apartamento.findAll({ //findall para obtener los apartamentos de la base de datos
+            include: [{ model: Propietario }]// info del propietario asociado al apartamento
         });
         res.json(apartamentos);
     } catch (error) {
@@ -15,7 +15,7 @@ const obtenerApartamentos = async (req, res) => {
 // Obtener un apartamento por ID
 const obtenerApartamentoPorId = async (req, res) => {
     try {
-        const apartamento = await Apartamento.findByPk(req.params.id, {
+        const apartamento = await Apartamento.findByPk(req.params.id, {//findBypk para buscar un apartamento por su id
             include: [{ model: Propietario }]
         });
         if (apartamento) {
@@ -31,7 +31,7 @@ const obtenerApartamentoPorId = async (req, res) => {
 // Crear un apartamento
 const crearApartamento = async (req, res) => {
     try {
-        const apartamento = await Apartamento.create(req.body);
+        const apartamento = await Apartamento.create(req.body);//create req.body para insertar un nuevo apartamento con los datos enviados al body
         res.status(201).json(apartamento);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -41,9 +41,9 @@ const crearApartamento = async (req, res) => {
 // Actualizar un apartamento
 const actualizarApartamento = async (req, res) => {
     try {
-        const apartamento = await Apartamento.findByPk(req.params.id);
+        const apartamento = await Apartamento.findByPk(req.params.id);//findBypk para buscar el apartamento por su id
         if (apartamento) {
-            await apartamento.update(req.body);
+            await apartamento.update(req.body);// si encuentra el apartamento por su id usa el update req.body para actualizar
             res.json(apartamento);
         } else {
             res.status(404).json({ message: 'Apartamento no encontrado' });
@@ -56,9 +56,9 @@ const actualizarApartamento = async (req, res) => {
 // Eliminar un apartamento
 const eliminarApartamento = async (req, res) => {
     try {
-        const apartamento = await Apartamento.findByPk(req.params.id);
+        const apartamento = await Apartamento.findByPk(req.params.id);//busca el apartamento por su id
         if (apartamento) {
-            await apartamento.destroy();
+            await apartamento.destroy();// si existe lo elimina
             res.json({ message: 'Apartamento eliminado exitosamente' });
         } else {
             res.status(404).json({ message: 'Apartamento no encontrado' });

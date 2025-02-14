@@ -4,7 +4,7 @@ const { Informe, Usuario } = require('../models');
 const obtenerInformes = async (req, res) => {
     try {
         const informes = await Informe.findAll({
-            include: [{ model: Usuario }]
+            include: [{ model: Usuario }]// informes asociados a su usuario
         });
         res.json(informes);
     } catch (error) {

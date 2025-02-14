@@ -6,7 +6,7 @@ const obtenerPropietarios = async (req, res) => {
         const propietarios = await Propietario.findAll({
             include: [
                 { model: Apartamento },
-                { model: Pago }
+                { model: Pago } // esto incluye el pago y los apartamentos asociados a cada propietario
             ]
         });
         res.json(propietarios);
